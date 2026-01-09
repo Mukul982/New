@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closet Connect | Your Clothing Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #ffde59;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.8rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab-btn {
+            padding: 12px 30px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .tab-btn:hover {
+            color: #ff6b6b;
+        }
+        
+        .tab-btn.active {
+            color: #ff6b6b;
+            border-bottom: 3px solid #ff6b6b;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Store Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(to right, #ff6b6b, #ff8e53);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .product-link {
+            display: block;
+            text-align: center;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .product-link:hover {
+            background-color: #ff5252;
+        }
+        
+        .empty-store {
+            text-align: center;
+            padding: 4rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .empty-store i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .empty-store h3 {
+            font-size: 1.8rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #ff6b6b;
+            outline: none;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #ff5252;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        /* Product List in Admin */
+        .admin-products-list {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-top: 2rem;
+        }
+        
+        .admin-product-item {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+        
+        .admin-product-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .admin-product-item:last-child {
+            border-bottom: none;
+        }
+        
+        .admin-product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .admin-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .admin-product-details {
+            flex-grow: 1;
+        }
+        
+        .admin-product-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .admin-product-price {
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-product-link {
+            font-size: 0.85rem;
+            color: #666;
+            word-break: break-all;
+        }
+        
+        .admin-product-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+        
+        .edit-btn {
+            background-color: #28a745;
+        }
+        
+        .edit-btn:hover {
+            background-color: #218838;
+        }
+        
+        .delete-btn {
+            background-color: #dc3545;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: #e9f7fe;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .instructions h3 {
+            color: #0d47a1;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .instructions h3 i {
+            margin-right: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: #ddd;
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+            padding-right: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: #ff6b6b;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links li a:hover {
+            color: #ff6b6b;
+        }
+        
+        .social-icons {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: #ff6b6b;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1.5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .admin-product-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .admin-product-image {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .admin-product-actions {
+                margin-top: 1rem;
+                align-self: flex-end;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tshirt"></i>
+                    Closet Connect
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#store" class="active" onclick="switchTab('store')">Store</a></li>
+                        <li><a href="#admin" onclick="switchTab('admin')">Add Products</a></li>
+                        <li><a href="#manage" onclick="switchTab('manage')">Manage Products</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('store')">Store Front</button>
+            <button class="tab-btn" onclick="switchTab('admin')">Add Product</button>
+            <button class="tab-btn" onclick="switchTab('manage')">Manage Products</button>
+        </div>
+
+        <!-- Store Tab -->
+        <div id="store-tab" class="tab-content active">
+            <div class="section-title">
+                <h2>My Clothing Collection</h2>
+                <p>Unique designs available for purchase through Teespring</p>
+            </div>
+            
+            <div id="products-container" class="products-grid">
+                <!-- Products will be dynamically added here -->
+            </div>
+            
+            <!-- Empty store message (shown when no products) -->
+            <div id="empty-store-message" class="empty-store" style="display: none;">
+                <i class="fas fa-tshirt"></i>
+                <h3>No products yet</h3>
+                <p>Add your first product using the "Add Product" tab above!</p>
+            </div>
+        </div>
+
+        <!-- Admin Tab -->
+        <div id="admin-tab" class="tab-content">
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> How to Add Products</h3>
+                <ol>
+                    <li>Go to your Teespring dashboard and copy the product link</li>
+                    <li>Paste the link in the "Product Link" field below</li>
+                    <li>Optionally add a title, price, and description</li>
+                    <li>Click "Add Product" to add it to your store</li>
+                    <li>Switch to the "Store Front" tab to see your products</li>
+                </ol>
+            </div>
+            
+            <div class="admin-panel">
+                <h2 style="margin-bottom: 1.5rem; color: #444;">Add New Product</h2>
+                
+                <div class="form-group">
+                    <label for="product-link">Teespring Product Link *</label>
+                    <input type="url" id="product-link" placeholder="https://teespring.com/your-product-link" required>
+                    <small style="color: #666; display: block; margin-top: 5px;">Paste your Teespring product link here</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-title">Product Title (Optional)</label>
+                    <input type="text" id="product-title" placeholder="e.g., Vintage Graphic T-Shirt">
+                    <small style="color: #666; display: block; margin-top: 5px;">If empty, a default title will be used</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-price">Price (Optional)</label>
+                    <input type="text" id="product-price" placeholder="e.g., 24.99">
+                    <small style="color: #666; display: block; margin-top: 5px;">If empty, a default price will be used</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-description">Description (Optional)</label>
+                    <textarea id="product-description" placeholder="Describe your product..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-image">Image URL (Optional)</label>
+                    <input type="url" id="product-image" placeholder="https://example.com/image.jpg">
+                    <small style="color: #666; display: block; margin-top: 5px;">If empty, a default clothing image will be used</small>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary" onclick="addProduct()">
+                        <i class="fas fa-plus-circle"></i> Add Product
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                        <i class="fas fa-redo"></i> Clear Form
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Products Tab -->
+        <div id="manage-tab" class="tab-content">
+            <div class="section-title">
+                <h2>Manage Your Products</h2>
+                <p>Edit or delete products from your store</p>
+            </div>
+            
+            <div id="admin-products-container" class="admin-products-list">
+                <!-- Admin product list will be dynamically added here -->
+                <div id="admin-empty-message" style="text-align: center; padding: 3rem; color: #888;">
+                    <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>No products to manage</h3>
+                    <p>Add products using the "Add Product" tab</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Closet Connect</h3>
+                    <p>Your personal clothing store powered by Teespring. Easily showcase and sell your custom designs with our simple storefront.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="switchTab('store')">Store Front</a></li>
+                        <li><a href="#" onclick="switchTab('admin')">Add Products</a></li>
+                        <li><a href="#" onclick="switchTab('manage')">Manage Products</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Powered By</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-shopping-cart"></i> Teespring</li>
+                        <li><i class="fas fa-credit-card"></i> Secure Checkout</li>
+                        <li><i class="fas fa-shipping-fast"></i> Worldwide Shipping</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Closet Connect. All rights reserved. | Products sold through Teespring</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Product data stored in browser's localStorage
+        let products = JSON.parse(localStorage.getItem('closetConnectProducts')) || [];
+        
+        // Default images for different product types
+        const defaultImages = [
+            "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&auto=format&fit=crop&w-800&q=80",
+            "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1539185441755-769473a23570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        ];
+        
+        // Initialize the store when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            renderStoreProducts();
+            renderAdminProducts();
+            updateEmptyMessages();
+        });
+        
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Set active tab button
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.textContent.includes(tabName === 'store' ? 'Store' : 
+                                             tabName === 'admin' ? 'Add' : 'Manage')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update nav links
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick')?.includes(tabName)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        // Add a new product
+        function addProduct() {
+            const linkInput = document.getElementById('product-link');
+            const titleInput = document.getElementById('product-title');
+            const priceInput = document.getElementById('product-price');
+            const descInput = document.getElementById('product-description');
+            const imageInput = document.getElementById('product-image');
+            
+            // Validate link
+            if (!linkInput.value.trim()) {
+                alert('Please enter a Teespring product link');
+                linkInput.focus();
+                return;
+            }
+            
+            // Generate a unique ID
+            const productId = 'product_' + Date.now();
+            
+            // Create product object
+            const newProduct = {
+                id: productId,
+                link: linkInput.value.trim(),
+                title: titleInput.value.trim() || 'Custom Design T-Shirt',
+                price: priceInput.value.trim() || '$24.99',
+                description: descInput.value.trim() || 'A unique, high-quality custom design available for purchase.',
+                image: imageInput.value.trim() || defaultImages[Math.floor(Math.random() * defaultImages.length)],
+                dateAdded: new Date().toLocaleDateString()
+            };
+            
+            // Add to products array
+            products.push(newProduct);
+            
+            // Save to localStorage
+            localStorage.setItem('closetConnectProducts', JSON.stringify(products));
+            
+            // Clear form
+            clearForm();
+            
+            // Update displays
+            renderStoreProducts();
+            renderAdminProducts();
+            updateEmptyMessages();
+            
+            // Switch to store tab to see the new product
+            switchTab('store');
+            
+            // Show success message
+            alert('Product added successfully!');
+        }
+        
+        // Clear the form
+        function clearForm() {
+            document.getElementById('product-link').value = '';
+            document.getElementById('product-title').value = '';
+            document.getElementById('product-price').value = '';
+            document.getElementById('product-description').value = '';
+            document.getElementById('product-image').value = '';
+        }
+        
+        // Render products in the store
+        function renderStoreProducts() {
+            const container = document.getElementById('products-container');
+            
+            if (products.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            
+            products.forEach(product => {
+                html += `
+                <div class="product-card" data-id="${product.id}">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.title}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-price">${product.price}</div>
+                        <p class="product-description">${product.description}</p>
+                        <a href="${product.link}" target="_blank" class="product-link">
+                            <i class="fas fa-shopping-cart"></i> Buy Now on Teespring
+                        </a>
+                    </div>
+                </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Render products in admin panel
+        function renderAdminProducts() {
+            const container = document.getElementById('admin-products-container');
+            
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div id="admin-empty-message" style="text-align: center; padding: 3rem; color: #888;">
+                        <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>No products to manage</h3>
+                        <p>Add products using the "Add Product" tab</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            products.forEach((product, index) => {
+                html += `
+                <div class="admin-product-item" data-id="${product.id}">
+                    <div class="admin-product-image">
+                        <img src="${product.image}" alt="${product.title}">
+                    </div>
+                    <div class="admin-product-details">
+                        <div class="admin-product-title">${product.title}</div>
+                        <div class="admin-product-price">${product.price}</div>
+                        <div class="admin-product-link">${product.link.substring(0, 60)}...</div>
+                    </div>
+                    <div class="admin-product-actions">
+                        <button class="action-btn edit-btn" onclick="editProduct(${index})" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deleteProduct(${index})" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Delete a product
+        function deleteProduct(index) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                products.splice(index, 1);
+                localStorage.setItem('closetConnectProducts', JSON.stringify(products));
+                renderStoreProducts();
+                renderAdminProducts();
+                updateEmptyMessages();
+            }
+        }
+        
+        // Edit a product
+        function editProduct(index) {
+            const product = products[index];
+            
+            // Populate form with product data
+            document.getElementById('product-link').value = product.link;
+            document.getElementById('product-title').value = product.title;
+            document.getElementById('product-price').value = product.price.replace('$', '');
+            document.getElementById('product-description').value = product.description;
+            document.getElementById('product-image').value = product.image.includes('unsplash') ? '' : product.image;
+            
+            // Change button to update
+            const addButton = document.querySelector('.btn-primary');
+            addButton.innerHTML = '<i class="fas fa-save"></i> Update Product';
+            addButton.onclick = function() { updateProduct(index); };
+            
+            // Switch to admin tab
+            switchTab('admin');
+            
+            // Scroll to form
+            document.getElementById('product-link').focus();
+        }
+        
+        // Update a product
+        function updateProduct(index) {
+            const linkInput = document.getElementById('product-link');
+            const titleInput = document.getElementById('product-title');
+            const priceInput = document.getElementById('product-price');
+            const descInput = document.getElementById('product-description');
+            const imageInput = document.getElementById('product-image');
+            
+            // Update product object
+            products[index].link = linkInput.value.trim();
+            products[index].title = titleInput.value.trim() || 'Custom Design T-Shirt';
+            products[index].price = priceInput.value.trim() || '$24.99';
+            products[index].description = descInput.value.trim() || 'A unique, high-quality custom design available for purchase.';
+            products[index].image = imageInput.value.trim() || defaultImages[Math.floor(Math.random() * defaultImages.length)];
+            
+            // Save to localStorage
+            localStorage.setItem('closetConnectProducts', JSON.stringify(products));
+            
+            // Reset button
+            const addButton = document.querySelector('.btn-primary');
+            addButton.innerHTML = '<i class="fas fa-plus-circle"></i> Add Product';
+            addButton.onclick = addProduct;
+            
+            // Clear form
+            clearForm();
+            
+            // Update displays
+            renderStoreProducts();
+            renderAdminProducts();
+            
+            // Switch to store tab
+            switchTab('store');
+            
+            // Show success message
+            alert('Product updated successfully!');
+        }
+        
+        // Update empty messages visibility
+        function updateEmptyMessages() {
+            const storeEmptyMsg = document.getElementById('empty-store-message');
+            const adminEmptyMsg = document.getElementById('admin-empty-message');
+            
+            if (products.length === 0) {
+                storeEmptyMsg.style.display = 'block';
+            } else {
+                storeEmptyMsg.style.display = 'none';
+            }
+        }
+        
+        // Add some sample products on first visit
+        function addSampleProducts() {
+            if (products.length === 0 && confirm('Would you like to add some sample products to see how the store works?')) {
+                products = [
+                    {
+                        id: 'product_1',
+                        link: 'https://teespring.com/shop/example-tshirt-1',
+                        title: 'Vintage Graphic Tee',
+                        price: '$24.99',
+                        description: 'High-quality cotton t-shirt with a unique vintage design.',
+                        image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        dateAdded: new Date().toLocaleDateString()
+                    },
+                    {
+                        id: 'product_2',
+                        link: 'https://teespring.com/shop/example-hoodie-1',
+                        title: 'Urban Culture Hoodie',
+                        price: '$39.99',
+                        description: 'Comfortable hoodie with front pocket and urban-inspired design.',
+                        image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                        dateAdded: new Date().toLocaleDateString()
+                    }
+                ];
+                
+                localStorage.setItem('closetConnectProducts', JSON.stringify(products));
+                renderStoreProducts();
+                renderAdminProducts();
+                updateEmptyMessages();
+            }
+        }
+        
+        // Check if it's first visit and offer sample products
+        if (products.length === 0) {
+            setTimeout(addSampleProducts, 1000);
+        }
+    </script>
+</body>
+</html>
